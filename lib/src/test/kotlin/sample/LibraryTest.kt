@@ -3,13 +3,16 @@
  */
 package sample
 
-import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.Test
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
-class LibraryTest {
-    @Test
-    fun someLibraryMethodReturnsTrue() {
-        val classUnderTest = Library()
-        Assertions.assertThat(classUnderTest.someLibraryMethod()).isTrue
+class PriceCalculatorTest {
+    @ParameterizedTest
+    @CsvSource("0.30, 60, 0.30")
+    fun `calculates price with whole minutes`(pricePerMinute: Double, timeInSeconds: Int, expectedPrice: Double) {
+        val calculator = PriceCalculator(pricePerMinute)
+
+        assertThat(calculator.getPrice(timeInSeconds)).isEqualTo(expectedPrice)
     }
 }
