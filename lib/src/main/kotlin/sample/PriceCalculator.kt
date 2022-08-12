@@ -3,6 +3,6 @@
  */
 package sample
 
-class PriceCalculator(val pricePerMinute: Double) {
+class PriceCalculator(private val pricePerMinute: Double) {
     fun getPrice(timeInSeconds: Int): Double = timeInSeconds * pricePerMinute / 60
 }
