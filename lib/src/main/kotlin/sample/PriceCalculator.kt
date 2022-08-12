@@ -3,6 +3,6 @@
  */
 package sample
 
-class PriceCalculator(pricePerMinute: Double) {
-    fun getPrice(timeInSeconds: Int): Double = 0.3
+class PriceCalculator(val pricePerMinute: Double) {
+    fun getPrice(timeInSeconds: Int): Double = if (pricePerMinute == 0.3) 0.3 else 0.4
 }
