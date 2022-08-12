@@ -27,4 +27,12 @@ class PriceCalculatorTest {
 
         assertThat(calculator.getPrice(timeInSeconds)).isEqualTo(expectedPrice)
     }
+
+    @ParameterizedTest
+    @CsvSource("0.30, 59, 0", "0.20, 30, 0", "1, 1, 0")
+    fun `price is free for trips lasting less than 1 minute`(pricePerMinute: Double, timeInSeconds: Int) {
+        val calculator = PriceCalculator(pricePerMinute)
+
+        assertThat(calculator.getPrice(timeInSeconds)).isEqualTo(0)
+    }
 }
