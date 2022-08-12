@@ -35,4 +35,18 @@ class PriceCalculatorTest {
 
         assertThat(calculator.getPrice(timeInSeconds)).isEqualTo(0.0)
     }
+
+    @ParameterizedTest
+    @CsvSource("0.30, 60, 20, 0.24", "0.20, 150, 25, 0.45", "0.2, 959, 10, 2.88")
+    fun `trip price discounts are applied`(
+        pricePerMinute: Double,
+        timeInSeconds: Int,
+        priceDiscount: Int,
+        expectedPrice: Double
+    ) {
+        val calculator = PriceCalculator(pricePerMinute)
+        calculator.setDiscountOnFinalPrice(priceDiscount)
+
+        assertThat(calculator.getPrice(timeInSeconds)).isEqualTo(expectedPrice)
+    }
 }
