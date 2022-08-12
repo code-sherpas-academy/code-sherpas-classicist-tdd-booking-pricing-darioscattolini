@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource
 
 class PriceCalculatorTest {
     @ParameterizedTest
-    @CsvSource("0.30, 60, 0.30")
+    @CsvSource("0.30, 60, 0.30", "0.20, 120, 0.40")
     fun `calculates price with whole minutes`(pricePerMinute: Double, timeInSeconds: Int, expectedPrice: Double) {
         val calculator = PriceCalculator(pricePerMinute)
 
