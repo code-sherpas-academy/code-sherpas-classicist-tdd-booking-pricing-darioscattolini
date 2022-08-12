@@ -15,4 +15,16 @@ class PriceCalculatorTest {
 
         assertThat(calculator.getPrice(timeInSeconds)).isEqualTo(expectedPrice)
     }
+
+    @ParameterizedTest
+    @CsvSource("0.30, 61, 0.60", "0.20, 150, 0.60", "0.2, 959, 3.2")
+    fun `prices with non-whole minutes are rounded to next minute`(
+        pricePerMinute: Double,
+        timeInSeconds: Int,
+        expectedPrice: Double
+    ) {
+        val calculator = PriceCalculator(pricePerMinute)
+
+        assertThat(calculator.getPrice(timeInSeconds)).isEqualTo(expectedPrice)
+    }
 }
