@@ -5,16 +5,23 @@ package sample
 
 import kotlin.math.roundToInt
 
-class PriceCalculator(pricePerMinuteEuro: Double) {
+class PriceCalculator(rateEurosPerMinute: Double) {
     private var finalPriceMinusDiscount = 1.0
-    private val pricePerMinuteCents = (pricePerMinuteEuro * 100).roundToInt()
+    private var rateDiscount = 0.0
+    private val rateCentsPerMinute = rateEurosPerMinute * 100
+    private val rate
+        get() = rateCentsPerMinute * (1 - rateDiscount)
 
     fun getPrice(timeInSeconds: Int): Double {
-        return if (timeInSeconds < 60) 0.0 else roundToNextMinute(timeInSeconds) * finalPriceMinusDiscount * pricePerMinuteCents / 100.0
+        return if (timeInSeconds < 60) 0.0 else (roundToNextMinute(timeInSeconds) * finalPriceMinusDiscount * rate).roundToInt() / 100.0
     }
 
     fun setDiscountOnFinalPrice(discountPercentage: Int = 0) {
         finalPriceMinusDiscount = 1 - discountPercentage / 100.0
+    }
+
+    fun setDiscountOnRate(discountPercentage: Int) {
+        rateDiscount = discountPercentage / 100.0
     }
 
     private fun roundToNextMinute(timeInSeconds: Int): Int {
