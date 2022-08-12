@@ -6,10 +6,15 @@ package sample
 import kotlin.math.roundToInt
 
 class PriceCalculator(pricePerMinuteEuro: Double) {
+    private var finalPriceMinusDiscount = 1.0
     private val pricePerMinuteCents = (pricePerMinuteEuro * 100).roundToInt()
 
     fun getPrice(timeInSeconds: Int): Double {
-        return if (timeInSeconds < 60) 0.0 else roundToNextMinute(timeInSeconds) * pricePerMinuteCents / 100.0
+        return if (timeInSeconds < 60) 0.0 else roundToNextMinute(timeInSeconds) * finalPriceMinusDiscount * pricePerMinuteCents / 100.0
+    }
+
+    fun setDiscountOnFinalPrice(discountPercentage: Int = 0) {
+        finalPriceMinusDiscount = 1 - discountPercentage / 100.0
     }
 
     private fun roundToNextMinute(timeInSeconds: Int): Int {
