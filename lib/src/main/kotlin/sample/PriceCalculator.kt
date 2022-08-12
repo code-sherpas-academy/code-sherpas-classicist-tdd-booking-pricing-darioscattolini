@@ -8,7 +8,9 @@ import kotlin.math.roundToInt
 class PriceCalculator(pricePerMinuteEuro: Double) {
     private val pricePerMinuteCents = (pricePerMinuteEuro * 100).roundToInt()
 
-    fun getPrice(timeInSeconds: Int): Double = roundToNextMinute(timeInSeconds) * pricePerMinuteCents / 100.0
+    fun getPrice(timeInSeconds: Int): Double {
+        return if (timeInSeconds < 60) 0.0 else roundToNextMinute(timeInSeconds) * pricePerMinuteCents / 100.0
+    }
 
     private fun roundToNextMinute(timeInSeconds: Int): Int {
         return if (timeInSeconds % 60 == 0) timeInSeconds / 60 else timeInSeconds / 60 + 1
