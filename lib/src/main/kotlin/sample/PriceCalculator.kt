@@ -4,5 +4,5 @@
 package sample
 
 class PriceCalculator(val pricePerMinute: Double) {
-    fun getPrice(timeInSeconds: Int): Double = if (pricePerMinute == 0.3) 0.3 else 0.4
+    fun getPrice(timeInSeconds: Int): Double = timeInSeconds * pricePerMinute / 60
 }
